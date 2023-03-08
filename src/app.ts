@@ -1,8 +1,7 @@
 import express from "express";
-import dotenv from "dotenv";
 
-export const app = express();
+const app = express();
 
 app.use(express);
 
-
+export { app }
