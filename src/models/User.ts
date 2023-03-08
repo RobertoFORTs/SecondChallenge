@@ -35,15 +35,27 @@ const userSchema = new Schema<Iuser>({
     }, 
     email: {
         type: String,
-        required: [true, "Field email is required."]
+        required: [true, "Field email is required."],
+        lowercase: true,
+        unique: true
     }, 
     password: {
         type: String,
-        required: [true, "A user has to have a password."]
+        required: [true, "Please provide a password."],
+        select: false //it wont show the password on the database (still needs encryption though)
+        //add a minLength later
+        
     },
     confirmPassword: {
         type: String,
-        required: [true, "Invalid confirmPassword entry"]
+        required: [true, "Confirming password is required"],
+        validate: {
+            validator: function(this: Iuser, element: String): Boolean {
+                const password: String = this.password;
+                return element === password;
+            },
+            message: "Passwords dont match!"
+        }
     }
 })
 
