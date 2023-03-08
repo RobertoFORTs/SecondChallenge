@@ -9,7 +9,7 @@ interface Iuser{
     email: string, 
     password: string, 
     confirmPassword: string 
-}
+};
 
 const userSchema = new Schema<Iuser>({
     firstName: {
