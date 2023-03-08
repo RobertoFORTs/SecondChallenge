@@ -8,27 +8,32 @@ interface IEventRegistration {
 
 interface IEventRegistrationRepository {
   create(EventRegistration: IEventRegistration): Promise<HydratedDocument<IEventRegistration>>;
-  getEventById(id: string): Promise<HydratedDocument<IEventRegistration> | null>;
-  getEventsByWeekDay(dayOfTheWeek: number): Promise<HydratedDocument<IEventRegistration>[]>;  
-  getAllEvents(): Promise<HydratedDocument<IEventRegistration>[]>;  
-  deleteById(id: string): Promise<void>;
+  getEventRegistrationById(id: string): Promise<HydratedDocument<IEventRegistration> | null>;
+  getEventsRegistrationByDayOfTheWeek(dayOfTheWeek: number): Promise<HydratedDocument<IEventRegistration>[]>;  
+  getAllEventsRegistration(): Promise<HydratedDocument<IEventRegistration>[]>;  
+  deleteEventRegistrationById(id: string): Promise<void>;
   // deleteFromWeekDay(dayOfTheWeek: number): Promise<void>;
 }
 
 export class EventRegistrationRepository implements IEventRegistrationRepository {
-  create(EventRegistration: IEventRegistration): Promise<HydratedDocument<IEventRegistration>> {
+  create(EventRegistration: IEventRegistration)
+  : Promise<HydratedDocument<IEventRegistration>> {
     throw new Error("Method not implemented.");
   }
-  getEventById(id: string): Promise<HydratedDocument<IEventRegistration> | null> {
+  getEventRegistrationById(id: string)
+  : Promise<HydratedDocument<IEventRegistration> | null> {
     throw new Error("Method not implemented.");
   }
-  getEventsByWeekDay(dayOfTheWeek: number): Promise<HydratedDocument<IEventRegistration>[]> {
+  getEventsRegistrationByDayOfTheWeek(dayOfTheWeek: number)
+  : Promise<HydratedDocument<IEventRegistration>[]> {
     throw new Error("Method not implemented.");
   }
-  getAllEvents(): Promise<HydratedDocument<IEventRegistration>[]> {
+  getAllEventsRegistration()
+  : Promise<HydratedDocument<IEventRegistration>[]> {
     throw new Error("Method not implemented.");
   }
-  deleteById(id: string): Promise<void> {
+  deleteEventRegistrationById(id: string)
+  : Promise<void> {
     throw new Error("Method not implemented.");
   }
 }
