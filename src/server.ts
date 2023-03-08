@@ -14,7 +14,7 @@ if(DB)
   connect(DB)
   .then(() => console.log('DB connection successful!'));
 } else{
-  console.log(`couldn't fetch connection string from DB, exiting...`);
+  console.log(`couldn't fetch connection string for DB, exiting...`);
   process.exit(1);
 }
 
