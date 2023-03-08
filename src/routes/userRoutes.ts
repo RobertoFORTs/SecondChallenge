@@ -6,4 +6,4 @@ router.post('/users/signUp');
 
 router.post('/users/signIn');
 
-export {router};
+export { router };
