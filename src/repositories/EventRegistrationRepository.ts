@@ -1,4 +1,4 @@
-import { Document, HydratedDocument, Types } from "mongoose";
+import {  HydratedDocument, Types } from "mongoose";
 
 interface IEventRegistration {
   descripttion: string;
