@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
-interface IEventRegistration {
+interface IEvent {
   description: string;
   dateTime: Date;
   createdAt: Date;
 }
 
-const eventRegistrationSchema = new Schema<IEventRegistration>({
+const eventSchema = new Schema<IEvent>({
   description: { 
     type: String,
   },
@@ -19,6 +19,6 @@ const eventRegistrationSchema = new Schema<IEventRegistration>({
   },
 });
 
-const EventRegistration = model<IEventRegistration>("EventRegistration", eventRegistrationSchema);
+const Event = model<IEvent>("Event", eventSchema);
 
-export { EventRegistration }
+export { Event }
