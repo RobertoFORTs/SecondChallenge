@@ -1,4 +1,6 @@
 import { Schema, model } from "mongoose";
+import {bcrypt} from "bcrypt";
+import { NextFunction } from "express";
 
 interface IUser {
 	firstName: string,
@@ -40,6 +42,14 @@ const userSchema = new Schema<IUser>({
 });
 
 //encrypt password before saving
+userSchema.pre('save', async function (this: any, next: NextFunction) {
+
+	if (this.isModified('password')){
+		this.password = await bcrypt.hash(this.password, 12);
+		next();
+	}
+	return next();
+})
 
 //add some methods to the model such as for reseting password if needed
 
