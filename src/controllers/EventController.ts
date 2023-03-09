@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { EventRepository } from "../repositories/EventRepository";
+import { IEvent as IRequest } from "../models/IEvent";
 
 const eventRepository = new EventRepository();
 

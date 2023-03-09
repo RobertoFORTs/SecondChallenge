@@ -1,17 +1,12 @@
 import { Schema, model } from "mongoose";
-
-interface IEvent {
-  description: string;
-  dateTime: Date;
-  createdAt: Date;
-}
+import { IEvent } from "./IEvent";
 
 const eventSchema = new Schema<IEvent>({
   description: {
     type: String,
   },
-  dateTime: {
-    type: Date,
+  dayOfWeek: {
+    type: String,
   },
   createdAt: {
     type: Date,

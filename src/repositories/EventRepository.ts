@@ -2,7 +2,7 @@ import {  HydratedDocument } from "mongoose";
 
 interface IEvent {
   descripttion: string;
-  dateTime: string;
+  dayOfWeek: string;
   createdAt: string;
 }
 
