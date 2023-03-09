@@ -33,7 +33,15 @@ const userSchema = new Schema<IUser>({
 	password: {
 		type: String,
 	}
+	//actvie
+	//resettoken
+	//resettokenexpires
+	//resetpassowrdat
 });
+
+//encrypt password before saving
+
+//add some methods to the model such as for reseting password if needed
 
 const User = model<IUser>("User", userSchema);
 
