@@ -1,18 +1,5 @@
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongoose";
-import { AppError } from "../errors/AppError";
-
-interface IUser{
-	firstName: string, 
-	lastName: string, 
-	birthDate: Date, 
-	city: string, 
-	country: string, 
-	email: string, 
-	password: string, 
-	confirmPassword: string 
-};
-
 
 const signToken = (id: ObjectId) => {
   return jwt.sign({ id }, process.env.JWT_SECRET!, { //there will be a string
