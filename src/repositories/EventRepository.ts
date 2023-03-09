@@ -7,7 +7,7 @@ interface IEvent {
 }
 
 interface IEventRepository {
-  create(Event: IEvent): Promise<HydratedDocument<IEvent>>;
+  create(event: IEvent): Promise<HydratedDocument<IEvent>>;
   getEventById(id: string): Promise<HydratedDocument<IEvent> | null>;
   getEventsByDayOfTheWeek(dayOfTheWeek: number): Promise<HydratedDocument<IEvent>[]>;  
   getAllEvents(): Promise<HydratedDocument<IEvent>[]>;  
@@ -16,7 +16,7 @@ interface IEventRepository {
 }
 
 export class EventRepository implements IEventRepository {
-  create(Event: IEvent): Promise<HydratedDocument<IEvent>> {
+  create(event: IEvent): Promise<HydratedDocument<IEvent>> {
     throw new Error("Method not implemented.");
   }
   getEventById(id: string): Promise<HydratedDocument<IEvent> | null> {

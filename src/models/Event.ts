@@ -7,14 +7,14 @@ interface IEvent {
 }
 
 const eventSchema = new Schema<IEvent>({
-  description: { 
+  description: {
     type: String,
   },
-  dateTime: { 
+  dateTime: {
     type: Date,
   },
-  createdAt: { 
-    type: Date, 
+  createdAt: {
+    type: Date,
     default: Date.now(),
   },
 });
