@@ -4,14 +4,8 @@ import { UserRepository } from "../repositories/UserRepository"; //contains the 
 const repository = new UserRepository();
 
 export class UserController {
-    async signUserUp (req : Request, res: Response): Promise<Response> {
-        const createdUser = await repository.signUserUp(req.body);
-
-        return res.status(201).json({
-            data: createdUser,
-            message: "User successfully registered"
-        });
-
+    async signUserUp (req : Request, res: any): Promise<void> { //res in type any coz type Response doenst have res.cookie
+        await repository.signUserUp(req.body, 201, res);  //data is beeing sent in authController(createJwtToken)
     };
 
     async signUserIn(req : Request, res: Response): Promise<Response> {

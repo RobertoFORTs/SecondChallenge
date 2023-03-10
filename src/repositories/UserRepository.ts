@@ -1,4 +1,6 @@
 import { HydratedDocument } from "mongoose";
+import { createJwtToken } from "../controllers/authController";
+import { User } from "../models/User";
 
 interface Iuser{
 	firstName: string, 
@@ -12,13 +14,22 @@ interface Iuser{
 };
 
 interface IuserRepository{
-	signUserUp(user: Iuser): Promise<HydratedDocument<Iuser>>,
+	signUserUp(user: Iuser, status: number, res: Response): Promise<void>,
 	signUserIn(email: string, password: string): Promise<HydratedDocument<Iuser>>,
 };
 
 export class UserRepository implements IuserRepository{
-	signUserUp(user: Iuser): Promise<HydratedDocument<Iuser>> {
-		throw new Error ('Method not implemented yet');
+	async signUserUp(user: Iuser, status: number, res: Response): Promise<void> {
+		const newUser = await User.create({
+			firstName: user.firstName,
+			lastName: user.lastName,
+			birthDate: user.birthDate,
+			city: user.city,
+			country: user.country,
+			email: user.email,
+			password: user.password
+		});
+		createJwtToken(newUser, 201, res); //it also will send the data
 	};
 
 	signUserIn(email: string, password: string): Promise<HydratedDocument<Iuser>>{

@@ -7,7 +7,7 @@ const signToken = (id: ObjectId) => {
   });
 };
 
-export function createJwtToken (user: any, sCode: number, res: any): void{ //change type later
+export function createJwtToken (user: any, sCode: number, res: any): void{ //change type later - res in type any coz type Response doenst have res.cookie
   const newToken = signToken(user._id);
   //generate cokkie
   
