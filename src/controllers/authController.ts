@@ -7,18 +7,12 @@ const signToken = (id: ObjectId) => {
   });
 };
 
-export function createJwtToken (user: any, sCode: number, res: any): void{ //change type later - res in type any coz type Response doenst have res.cookie
+export function createJwtToken (user: any, sCode: number, res: any): void{ 
   const newToken = signToken(user._id);
-  //generate cokkie
-  
-  const expireTime: number = +process.env.JWT_TOKEN_EXPIRES! ;
-  const cookieOptions = {
-    expires: new Date(Date.now() + expireTime * 24* 60* 60 * 1000),
-    httpOnly: true
-  };
 
-  res.cookie('jwt', newToken, cookieOptions);
+
   user.password = undefined;
+  res.setHeader('Token', newToken);
   res.status(sCode).json({
     status: "success",
     token: newToken,
