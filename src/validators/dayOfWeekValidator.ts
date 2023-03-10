@@ -11,7 +11,7 @@ async function dayOfWeekValidator(dayOfWeek: string): Promise<string> {
   const isDayOfWeekValid = days.includes(dayOfWeek);
 
   if (!isDayOfWeekValid) {
-    throw new AppError("Invalid day of week", 400);
+    throw new AppError("Day of week invalid", 400);
   }
 
   return dayOfWeek;
