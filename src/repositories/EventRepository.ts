@@ -1,34 +1,77 @@
 import {  HydratedDocument } from "mongoose";
+import { Event } from "../models/Event";
 
 interface IEvent {
-  descripttion: string;
+  description: string;
   dayOfWeek: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
 interface IEventRepository {
   create(event: IEvent): Promise<HydratedDocument<IEvent>>;
   getEventById(id: string): Promise<HydratedDocument<IEvent> | null>;
-  getEventsByDayOfTheWeek(dayOfTheWeek: number): Promise<HydratedDocument<IEvent>[]>;  
+  getEventsByDayOfWeek(dayOfWeek: string): Promise<HydratedDocument<IEvent>[]>;  
   getAllEvents(): Promise<HydratedDocument<IEvent>[]>;  
   deleteEventById(id: string): Promise<void>;
-  // deleteFromWeekDay(dayOfTheWeek: number): Promise<void>;
+  deleteEventsByDayOfWeek(dayOfWeek: string): Promise<void>;
 }
 
-export class EventRepository implements IEventRepository {
-  create(event: IEvent): Promise<HydratedDocument<IEvent>> {
-    throw new Error("Method not implemented.");
+class EventRepository implements IEventRepository {
+  private static INSTANCE: EventRepository;
+
+  static getInstance() {
+    if (!EventRepository.INSTANCE) {
+      EventRepository.INSTANCE = new EventRepository();
+    }
+
+    return EventRepository.INSTANCE;
   }
-  getEventById(id: string): Promise<HydratedDocument<IEvent> | null> {
-    throw new Error("Method not implemented.");
+
+  async create({ description, dayOfWeek, createdAt }: IEvent): Promise<HydratedDocument<IEvent>> {
+    const event = await Event.create({ description, dayOfWeek, createdAt });
+
+    return event;
   }
-  getEventsByDayOfTheWeek(dayOfTheWeek: number): Promise<HydratedDocument<IEvent>[]> {
-    throw new Error("Method not implemented.");
+
+  async getEventById(id: string): Promise<HydratedDocument<IEvent> | null> {
+    const event = await Event.findById(id);
+
+    return event;
   }
-  getAllEvents(): Promise<HydratedDocument<IEvent>[]> {
-    throw new Error("Method not implemented.");
+
+  async getEventsByDayOfWeek(dayOfWeek: string): Promise<HydratedDocument<IEvent>[]> {
+    const events = await Event.find();
+    const eventsByDayOfWeek = events.filter((event: HydratedDocument<IEvent>) => {
+      if (dayOfWeek === event.dayOfWeek) {
+        return event;
+      }
+    });
+
+    return eventsByDayOfWeek;
   }
-  deleteEventById(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async getAllEvents(): Promise<HydratedDocument<IEvent>[]> {
+    const events = await Event.find();
+
+    return events;
+  }
+
+  async deleteEventById(id: string): Promise<void> {
+    await Event.deleteOne({ _id: id });
+    
+    return;
+  }
+
+  async deleteEventsByDayOfWeek(dayOfWeek: string): Promise<void> {
+    const events = await Event.find();
+    events.filter(async (event: HydratedDocument<IEvent>) => {
+      if (dayOfWeek === event.dayOfWeek) {
+        await Event.deleteOne(event._id);
+      }
+    });
+
+    return;
   }
 }
+
+export { EventRepository }
