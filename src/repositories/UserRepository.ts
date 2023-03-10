@@ -14,12 +14,12 @@ interface Iuser{
 };
 
 interface IuserRepository{
-	signUserUp(user: Iuser, status: number, res: Response): Promise<void>,
+	signUserUp(user: Iuser, status: number, res: any): Promise<void>,
 	signUserIn(email: string, password: string): Promise<HydratedDocument<Iuser>>,
 };
 
 export class UserRepository implements IuserRepository{
-	async signUserUp(user: Iuser, status: number, res: Response): Promise<void> {
+	async signUserUp(user: Iuser, status: number, res: any): Promise<void> {
 		const newUser = await User.create({
 			firstName: user.firstName,
 			lastName: user.lastName,
