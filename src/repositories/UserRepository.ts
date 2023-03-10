@@ -1,6 +1,8 @@
 import { HydratedDocument } from "mongoose";
 import { createJwtToken } from "../controllers/authController";
+import { AppError } from "../errors/AppError";
 import { User } from "../models/User";
+import bcrypt from "bcrypt"
 
 interface Iuser{
 	firstName: string, 
@@ -15,7 +17,7 @@ interface Iuser{
 
 interface IuserRepository{
 	signUserUp(user: Iuser, status: number, res: any): Promise<void>,
-	signUserIn(email: string, password: string): Promise<HydratedDocument<Iuser>>,
+	signUserIn(email: string, password: string, res: any, next: any): Promise<void>,
 };
 
 export class UserRepository implements IuserRepository{
@@ -32,7 +34,15 @@ export class UserRepository implements IuserRepository{
 		createJwtToken(newUser, 201, res); //it also will send the data
 	};
 
-	signUserIn(email: string, password: string): Promise<HydratedDocument<Iuser>>{
-		throw new Error ('Method not implemented yet');
+	async signUserIn(email: string, password: string, res: any, next: any): Promise<void>{	
+		//find existing user
+		const user = await User.findOne({ email }).select("+password");
+		
+		//user found?
+		if (!user || !bcrypt.compare(password, user.password)){
+			return next(new AppError("incorrect email or password", 401));
+		}
+
+		createJwtToken(user, 200, res);
 	}
 };

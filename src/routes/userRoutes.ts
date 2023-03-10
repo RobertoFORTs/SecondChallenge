@@ -7,7 +7,7 @@ const userController = new UserController();
 
 //user gains access to system
 userRouter.post("/users/signUp", userController.signUserUp);
-userRouter.post("/users/signIn");
+userRouter.post("/users/signIn", userController.signUserIn);
 
 //implement middleware to admin user use of system
 

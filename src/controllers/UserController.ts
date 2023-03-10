@@ -1,4 +1,5 @@
-import {Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
+import { AppError } from "../errors/AppError";
 import { UserRepository } from "../repositories/UserRepository"; //contains the actual methods
 //this is still only a base controller, it has to be added more complex funccionality
 const repository = new UserRepository();
@@ -9,16 +10,11 @@ export class UserController {
         await repository.signUserUp(req.body, 201, res);  //data is beeing sent in authController(createJwtToken)
     };
 
-    async signUserIn(req : Request, res: Response): Promise<Response> {
+    async signUserIn(req : Request, res: Response, next: any): Promise<void> {
         if (!req.body.email || !req.body.password){
-            return res.status(400).json({
-                message: "invalid email or password"
-            });
+            return next(new AppError("Please provide email and password", 400));
         }
-        const verifiedUser = await repository.signUserIn(req.body.email, req.body.password);
-
-        return res.status(200).json({
-            message: "user has logged in"
-        });
+        
+        await repository.signUserIn(req.body.email, req.body.password, res, next);
     }
 }

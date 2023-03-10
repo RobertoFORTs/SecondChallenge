@@ -11,7 +11,7 @@ export function createJwtToken (user: any, sCode: number, res: any): void{
   const newToken = signToken(user._id);
 
 
-  user.password = undefined;
+  user.password = undefined; //it doesnt send in the response but saves it to database
   res.setHeader('Token', newToken);
   res.status(sCode).json({
     status: "success",
