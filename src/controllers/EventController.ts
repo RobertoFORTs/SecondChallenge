@@ -4,7 +4,7 @@ import { IEvent as IRequest } from "../models/IEvent";
 
 const eventRepository = new EventRepository();
 
-export class EventRegistrationController {
+export class EventController {
   async getAllEvents(req: Request, res: Response): Promise<Response> {
     const events = await eventRepository.getAllEvents();
 

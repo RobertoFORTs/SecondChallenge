@@ -18,11 +18,9 @@ const app = express();
 app.use(express.json());
 app.use("/api/v1", userRouter);
 
-
 // Database connection
 const DB = process.env.DATABASE!.replace("<PASSWORD>", process.env.DATABASE_PASSWORD!);
 connect(DB).then(() => console.log("DB connection successful!"));
-
 
 
 // Error handling
