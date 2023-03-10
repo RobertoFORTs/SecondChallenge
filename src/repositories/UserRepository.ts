@@ -31,7 +31,7 @@ export class UserRepository implements IuserRepository{
 			email: user.email,
 			password: user.password
 		});
-		createJwtToken(newUser, 201, res); //it also will send the data
+		createJwtToken(newUser, 201, "Succesfull user registration", res); //it also will send the data
 	};
 
 	async signUserIn(email: string, password: string, res: any, next: any): Promise<void>{	
@@ -43,6 +43,6 @@ export class UserRepository implements IuserRepository{
 			return next(new AppError("incorrect email or password", 401));
 		}
 
-		createJwtToken(user, 200, res);
+		createJwtToken(user, 200, "User has logged in" ,res);
 	}
 };
