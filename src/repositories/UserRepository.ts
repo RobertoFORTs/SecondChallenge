@@ -2,7 +2,7 @@ import { HydratedDocument } from "mongoose";
 import { createJwtToken } from "../controllers/authController";
 import { AppError } from "../errors/AppError";
 import { User } from "../models/User";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 
 interface Iuser{
 	firstName: string, 
@@ -36,10 +36,10 @@ export class UserRepository implements IuserRepository{
 
 	async signUserIn(email: string, password: string, res: any, next: any): Promise<void>{	
 		//find existing user
-		const user = await User.findOne({ email }).select("+password");
+		const user: HydratedDocument<Iuser> | null = await User.findOne({ email }).select("+password");
 		
-		//user found?
-		if (!user || !bcrypt.compare(password, user.password)){
+		//user found? is password correct?
+		if (!user || !(await bcrypt.compare(password, user.password))){
 			return next(new AppError("incorrect email or password", 401));
 		}
 

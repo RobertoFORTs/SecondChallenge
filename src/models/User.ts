@@ -53,6 +53,10 @@ userSchema.pre("save", async function (next):Promise<void> {
 
 //add some methods to the model such as for reseting password if needed
 
+// userSchema.methods.checkPassword = async function(password : string | Buffer, encryptedPassword : string) {
+// 	return await bcrypt.compare(password, encryptedPassword);
+// }
+
 const User = model<IUser>("User", userSchema);
 
 export { User };
