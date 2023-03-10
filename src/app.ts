@@ -3,9 +3,11 @@ import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 import { connect } from "mongoose";
 import dotenv from "dotenv";
+import { ValidationError } from "joi";
 
 import { AppError } from "./errors/AppError";
 import { userRouter } from "./routes/userRoutes";
+import { eventRouter } from "./routes/eventRutes";
 
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
@@ -17,11 +19,11 @@ const app = express();
 
 app.use(express.json());
 app.use("/api/v1", userRouter);
+app.use("/api/v1/events", eventRouter);
 
 // Database connection
 const DB = process.env.DATABASE!.replace("<PASSWORD>", process.env.DATABASE_PASSWORD!);
 connect(DB).then(() => console.log("DB connection successful!"));
-
 
 // Error handling
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
@@ -29,10 +31,11 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(error.statusCode).json({ message: error.message });
   }
 
+  if (error instanceof ValidationError) {
+    return res.status(400).json({ message: error.message });
+  }
+
   return res.status(500).json({ message: error.message });
 });
-
-const specs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 export { app };

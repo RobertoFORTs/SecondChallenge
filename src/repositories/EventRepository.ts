@@ -4,7 +4,6 @@ import { Event } from "../models/Event";
 interface IEvent {
   description: string;
   dayOfWeek: string;
-  createdAt: Date;
 }
 
 interface IEventRepository {
@@ -27,8 +26,8 @@ class EventRepository implements IEventRepository {
     return EventRepository.INSTANCE;
   }
 
-  async create({ description, dayOfWeek, createdAt }: IEvent): Promise<HydratedDocument<IEvent>> {
-    const event = await Event.create({ description, dayOfWeek, createdAt });
+  async create({ description, dayOfWeek }: IEvent): Promise<HydratedDocument<IEvent>> {
+    const event = await Event.create({ description, dayOfWeek });
 
     return event;
   }
