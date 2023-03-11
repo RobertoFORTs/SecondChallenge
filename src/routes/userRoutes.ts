@@ -2,6 +2,7 @@ import express from "express";
 import { UserController } from "../controllers/UserController";
 import { signUpValidator } from "../validators/signUpValidator";
 import { baseProtection, isLoggedIn } from "../controllers/authController";
+import { updateMeValidator } from "../validators/updateMeValidator";
 
 const userRouter = express.Router();
 
@@ -16,7 +17,7 @@ userRouter.use(baseProtection);
 
 userRouter
   .route("/users")
-  .put(userController.uptadeMe)
+  .put(updateMeValidator, userController.uptadeMe)
   .delete();
 
 export { userRouter };
