@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { EventRepository } from "../repositories/EventRepository";
 import { IEvent as IRequest } from "../models/IEvent";
-import { dayOfWeekValidator } from "../validators/dayOfWeekValidator";
-import { AppError } from "../errors/AppError";
 
 const eventRepository = EventRepository.getInstance();
 
@@ -23,18 +21,17 @@ class EventController {
   async getEventById(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const event = await eventRepository.getEventById(id);
+    const eventFound = await eventRepository.getEventById(id);
 
-    return res.status(200).json({ event: event });
+    return res.status(200).json({ event: eventFound });
   }
 
   async getEventByDayOfWeek(req: Request, res: Response): Promise<Response> {
     let dayOfWeek = String(req.query.dayOfWeek);  
-    dayOfWeek = await dayOfWeekValidator(dayOfWeek);
+  
+    const eventsFound = await eventRepository.getEventsByDayOfWeek(dayOfWeek);
 
-    const events = await eventRepository.getEventsByDayOfWeek(dayOfWeek);
-
-    return res.status(200).json({ events: events });
+    return res.status(200).json({ events: eventsFound });
   }
 
   async deleteEventById(req: Request, res: Response): Promise<Response> {
@@ -47,7 +44,6 @@ class EventController {
 
   async deleteEventByDayOfWeek(req: Request, res: Response): Promise<Response> {
     let dayOfWeek = String(req.query.dayOfWeek);  
-    dayOfWeek = await dayOfWeekValidator(dayOfWeek);
 
     await eventRepository.deleteEventsByDayOfWeek(dayOfWeek);
 

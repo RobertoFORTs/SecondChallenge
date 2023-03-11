@@ -8,9 +8,15 @@ const requestValidation = Joi.object({
   city: Joi.string().required().messages({ "string.required": "City is required" }), 
   country: Joi.string().required().messages({ "string.required": "Country is required" }), 
   email: Joi.string().email().required().messages({ "string.required": "Email is required" }), 
-  password: Joi.string().required().messages({ "string.required": "Password is required" }), 
-  confirmPassword: Joi.string().valid(Joi.ref("password"))
-  .required().messages({ "string.required": "The passwords must be the same" }) 
+  password: Joi.string().min(8).empty().required().messages({
+    "string.min": "Name should be min 8 characters",
+    "string.empty": "Name cannot be an empty field", 
+    "string.required": "Password is required" }), 
+  confirmPassword: Joi.string().min(8).empty().valid(Joi.ref("password"))
+  .required().messages({ 
+    "string.min": "Name should be min 8 characters",
+    "string.empty": "Name cannot be an empty field", 
+    "string.required": "The passwords must be the same" }) 
 });
 
 async function signUpValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
