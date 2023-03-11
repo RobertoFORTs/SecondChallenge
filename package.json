@@ -18,7 +18,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^4.6.2"
+    "swagger-ui-express": "^4.6.2",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
