@@ -1,20 +1,24 @@
 import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongoose";
-import { AppError } from "../errors/AppError";
+import { AppError } from "../errors/AppError"
+import { promisify } from 'util';
+import { User } from "../models/User";
+
+
 
 const signToken = (id: ObjectId) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET!, { //there will be a string
-    expiresIn: process.env.JWT_TOKEN_EXPIRES  
+
+  return jwt.sign({ id }, process.env.JWT_SECRET!, { 
+    expiresIn: process.env.JWT_TOKEN_EXPIRES
   });
 };
 
 export function createJwtToken (user: any, sCode: number, message: string, res: any): void{ 
   const newToken = signToken(user._id);
 
-
   user.password = undefined; //it doesnt send in the response but saves it to database
-  res.setHeader('Token', newToken);
+  res.setHeader("token", newToken);
   res.status(sCode).json({
     status: "success",
     message: message,
@@ -26,11 +30,37 @@ export function createJwtToken (user: any, sCode: number, message: string, res: 
 
 }
 
-export function baseProtection (req: any, res: Response, next: NextFunction): void {
-  let validateToken : string | null;
-  if (req.headers.authorization && req.headers.Authorization.startsWith('Bearer')) validateToken = req.headers.authorization.split(' ')[1];
+export async function isLoggedIn(req: any, res: any, next: NextFunction): Promise<void> {
+  if (!req.headers.authorization){
+    return next();
+  }
+  const token = req.headers.authorization.split(' ')[1];
+  const validateToken: any = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const candidateUser = await User.findById(validateToken.id);
+  if (!candidateUser){
+    return next();
+  }
+  if (candidateUser.email === req.body.email){
+    return next(new AppError('User is already logged in!! Logging off current user', 401));
+  }
+}
+
+export async function baseProtection (req: any, res: any, next: NextFunction): Promise<void> {
+  let token : string;
+  req.user = null;
+  if (req.headers.authorization) token = req.headers.authorization.split(' ')[1];
   else{
     return next( new AppError("Please log in to gain access", 401) );
   }
-  
+
+  const validateToken: any = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  let current = await User.findById(validateToken.id);
+  if (!current){
+    next( new AppError('User does not exist', 401));
+  }
+
+  req.user = current;
+  res.locals.user = current;
+  next();
 }

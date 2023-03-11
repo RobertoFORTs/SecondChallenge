@@ -10,11 +10,15 @@ export class UserController {
         await repository.signUserUp(req.body, 201, res);  //data is beeing sent in authController(createJwtToken)
     };
 
-    async signUserIn(req : Request, res: Response, next: any): Promise<void> {
+    async signUserIn(req : any, res: any, next: any): Promise<void> {
         if (!req.body.email || !req.body.password){
             return next(new AppError("Please provide email and password", 400));
         }
         
-        await repository.signUserIn(req.body.email, req.body.password, res, next);
+        await repository.signUserIn(req.body.email, req.body.password, req, res, next);
+    }
+
+    async uptadeMe (req: any, res: any, next: NextFunction): Promise<void>{
+        await repository.updateMe(req, res, next);
     }
 }
