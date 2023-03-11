@@ -59,18 +59,7 @@ export class UserRepository implements IuserRepository{
 			throw new AppError('You cant change password here', 400);
 		}
 
-		//const fields = ["firstName", "lastName", "birthDate", "city", "country"];
 		const newObjUser: {} = req.body;
-
-		//if needs to change every field
-		// Object.keys(newObjUser).forEach(el => {
-		// 	if (fields.includes(el)) {
-		// 		fields.filter(field => field !== el);
-		// 	}
-		// });
-		// if (fields){
-		// 	return next(new AppError("incomplete data, please provide complete new user data", 400));
-		// }
 
 		const updatedUser = await User.updateOne(req.user, newObjUser, {
 			new: true,
