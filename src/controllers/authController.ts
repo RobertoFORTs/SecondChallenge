@@ -1,5 +1,7 @@
+import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongoose";
+import { AppError } from "../errors/AppError";
 
 const signToken = (id: ObjectId) => {
   return jwt.sign({ id }, process.env.JWT_SECRET!, { //there will be a string
@@ -21,4 +23,14 @@ export function createJwtToken (user: any, sCode: number, message: string, res: 
       user
     }
   });
+
+}
+
+export function baseProtection (req: any, res: Response, next: NextFunction): void {
+  let validateToken : string | null;
+  if (req.headers.authorization && req.headers.Authorization.startsWith('Bearer')) validateToken = req.headers.authorization.split(' ')[1];
+  else{
+    return next( new AppError("Please log in to gain access", 401) );
+  }
+  
 }
