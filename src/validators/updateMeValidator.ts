@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
-
+// if not required change validation
 const requestValidation = Joi.object({
   firstName: Joi.string().required().messages({ "string.required": "FirstName is required" }), 
   lastName: Joi.string().required().messages({ "string.required": "LastName is required" }),

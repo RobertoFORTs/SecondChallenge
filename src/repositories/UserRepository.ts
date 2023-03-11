@@ -18,7 +18,7 @@ interface Iuser{
 
 interface IuserRepository{
 	signUserUp(user: Iuser, status: number, res: any): Promise<void>,
-	signUserIn(email: string, password: string, req: any, res: any, next: any): Promise<void>,
+	signUserIn(email: string, password: string, res: any, next: any): Promise<void>,
 	updateMe(req: any, res: any, next: NextFunction): Promise<void>,
 	deleteMe(req: any, res: any, next: NextFunction): Promise<void>,
 };
@@ -39,7 +39,7 @@ export class UserRepository implements IuserRepository{
 	};
 
 
-	async signUserIn(email: string, password: string, req: any, res: any, next: any): Promise<void>{	
+	async signUserIn(email: string, password: string, res: any, next: any): Promise<void>{	
 		//find existing user
 		const user: HydratedDocument<Iuser> | null = await User.findOne({ email }).select("+password");
 		
@@ -52,13 +52,6 @@ export class UserRepository implements IuserRepository{
 	}
 
 	async updateMe(req: any, res: any, next: NextFunction): Promise<void>{
-		if (!req.body){
-			throw new AppError('Please provide new user data to procede.', 400);
-		}
-		if (req.body.email || req.body.password){
-			throw new AppError('You cant change password here', 400);
-		}
-
 		const newObjUser: {} = req.body;
 
 		const updatedUser = await User.updateOne(req.user, newObjUser, {
@@ -75,6 +68,9 @@ export class UserRepository implements IuserRepository{
 	}
 
 	async deleteMe(req: any, res: any, next: NextFunction): Promise<void> {
-		
+		await User.findByIdAndDelete(req.user._id);
+		res.status(204).json({
+			message: "success"
+		});
 	}
 };

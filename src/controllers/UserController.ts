@@ -15,10 +15,14 @@ export class UserController {
             return next(new AppError("Please provide email and password", 400));
         }
         
-        await repository.signUserIn(req.body.email, req.body.password, req, res, next);
+        await repository.signUserIn(req.body.email, req.body.password, res, next);
     }
 
     async uptadeMe (req: any, res: any, next: NextFunction): Promise<void>{
         await repository.updateMe(req, res, next);
+    }
+
+    async deleteMe (req: any, res: any, next: NextFunction): Promise<void>{
+        await repository.deleteMe(req, res, next);
     }
 }

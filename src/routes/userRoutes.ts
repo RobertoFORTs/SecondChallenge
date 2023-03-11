@@ -18,6 +18,6 @@ userRouter.use(baseProtection);
 userRouter
   .route("/users")
   .put(updateMeValidator, userController.uptadeMe)
-  .delete();
+  .delete(userController.deleteMe);
 
 export { userRouter };
