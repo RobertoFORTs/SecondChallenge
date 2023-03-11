@@ -20,6 +20,7 @@ interface IuserRepository{
 	signUserUp(user: Iuser, status: number, res: any): Promise<void>,
 	signUserIn(email: string, password: string, req: any, res: any, next: any): Promise<void>,
 	updateMe(req: any, res: any, next: NextFunction): Promise<void>,
+	deleteMe(req: any, res: any, next: NextFunction): Promise<void>,
 };
 
 export class UserRepository implements IuserRepository{
@@ -54,16 +55,23 @@ export class UserRepository implements IuserRepository{
 		if (!req.body){
 			throw new AppError('Please provide new user data to procede.', 400);
 		}
+		if (req.body.email || req.body.password){
+			throw new AppError('You cant change password here', 400);
+		}
 
-		const fields = ["firstName", "lastName", "birthDate", "city", "country", "email", "password"];
+		//const fields = ["firstName", "lastName", "birthDate", "city", "country"];
 		const newObjUser: {} = req.body;
 
-		Object.keys(newObjUser).forEach(el => {
-			if (!fields.includes(el)){
-				return next( new AppError('Incomplete data, please provide complete data!', 400) );
-			}
-		});
-		
+		//if needs to change every field
+		// Object.keys(newObjUser).forEach(el => {
+		// 	if (fields.includes(el)) {
+		// 		fields.filter(field => field !== el);
+		// 	}
+		// });
+		// if (fields){
+		// 	return next(new AppError("incomplete data, please provide complete new user data", 400));
+		// }
+
 		const updatedUser = await User.updateOne(req.user, newObjUser, {
 			new: true,
 			runValidators: true
@@ -75,5 +83,9 @@ export class UserRepository implements IuserRepository{
 				updatedUser: updatedUser
 			}
 		});
+	}
+
+	async deleteMe(req: any, res: any, next: NextFunction): Promise<void> {
+		
 	}
 };
