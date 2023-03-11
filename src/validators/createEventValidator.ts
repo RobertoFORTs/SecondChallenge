@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
-import { dayOfWeekValidator } from "./dayOfWeekValidator";
 
 const requestValidation = Joi.object({
   description: Joi.string().required().messages({ "string.required": "Description is required" }),
