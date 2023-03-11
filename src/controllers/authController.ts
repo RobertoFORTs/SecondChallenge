@@ -43,6 +43,7 @@ export async function isLoggedIn(req: any, res: any, next: NextFunction): Promis
   if (candidateUser.email === req.body.email){
     return next(new AppError('User is already logged in!! Logging off current user', 401));
   }
+  next();
 }
 
 export async function baseProtection (req: any, res: any, next: NextFunction): Promise<void> {
