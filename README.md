@@ -183,8 +183,11 @@ e.g.:
 
 --------------------------------------------------------------
 ## Document
-
+Swagger documentation:
 <http://localhost:8000/apiDocs/>
+
+Postman:
+<https://elements.getpostman.com/redirect?entityId=26268056-2b3f439f-f128-478f-80e8-48f925489c83&entityType=collection>
 
 --------------------------------------------------------------
 ## Features
