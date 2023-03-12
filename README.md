@@ -110,11 +110,26 @@ e.g.:
  
  e.g.:
  
- 
+ ![image](https://user-images.githubusercontent.com/114432972/224574316-16698b80-3b3d-40e8-900b-4a59f3f4bf5d.png)
+
+--------------------------------------------------------------
   
 ```{{URL}}/events/:id```
  *  For getting an Event By Id(get request) 
+ 
+  e.g.:
+  
+  ![image](https://user-images.githubusercontent.com/114432972/224574394-3dbd08fd-854a-449b-8998-0f4273995d38.png)
+
+--------------------------------------------------------------
+ 
+ ```{{URL}}/events/event/:id```
  *  For deleting an Event By Id(delete request)
+ 
+ e.g.:
+ 
+  ![image](https://user-images.githubusercontent.com/114432972/224574528-68d57f57-8f98-4150-b777-809da56dd9b6.png)
+
  --------------------------------------------------------------
  
 #### User Routes
