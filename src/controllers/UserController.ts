@@ -22,15 +22,21 @@ class UserController {
   }
 
   async uptadeMe (req: any, res: any, next: NextFunction): Promise<void>{
-  	await repository.updateMe(req, res, next);
-
-		return;
+  	const newUserBody = await repository.updateMe(req, res, next);
+    res.status(200).json({
+      status: "success",
+      message: "User updated",
+      data: {
+        newUserBody
+      }
+    });
   }
 
   async deleteMe (req: any, res: any, next: NextFunction): Promise<void>{
   	await repository.deleteMe(req, res, next);
-
-		return;
+    res.status(204).json({
+			message: "success"
+		});
   }
 }
 

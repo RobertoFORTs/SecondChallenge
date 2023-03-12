@@ -6,7 +6,7 @@ import { NextFunction } from "express";
 
 import bcrypt from "bcrypt";
 
-interface Iuser{
+interface IUser{
 	firstName: string, 
 	lastName: string, 
 	birthDate: Date, 
@@ -18,9 +18,9 @@ interface Iuser{
 };
 
 interface IuserRepository { 
-	signUserUp(user: Iuser, status: number, res: any): Promise<void>,
+	signUserUp(user: IUser, status: number, res: any): Promise<void>,
 	signUserIn(email: string, password: string, res: any, next: any): Promise<void>,
-	updateMe(req: any, res: any, next: NextFunction): Promise<void>,
+	updateMe(req: any, res: any, next: NextFunction): Promise<any>,
 	deleteMe(req: any, res: any, next: NextFunction): Promise<void>,
 };
 
@@ -35,7 +35,7 @@ class UserRepository implements IuserRepository {
 		return UserRepository.INSTANCE;
 	}
 
-	async signUserUp(user: Iuser, status: number, res: any): Promise<void> {
+	async signUserUp(user: IUser, status: number, res: any): Promise<void> {
 		const newUser = await User.create({
 			firstName: user.firstName,
 			lastName: user.lastName,
@@ -47,23 +47,19 @@ class UserRepository implements IuserRepository {
 		});
 
 		createJwtToken(newUser, status, "Successfull user registration", res);
-
-		return;
 	};
 
 	async signUserIn(email: string, password: string, res: any, next: any): Promise<void>{	
-		const user: HydratedDocument<Iuser> | null = await User.findOne({ email }).select("+password");
+		const user: HydratedDocument<IUser> | null = await User.findOne({ email }).select("+password");
 		
 		if (!user || !(await bcrypt.compare(password, user.password))){
 			return next(new AppError("incorrect email or password", 401));
 		}
 
 		createJwtToken(user, 200, "User has logged in", res);
-
-		return;
 	}
 
-	async updateMe(req: any, res: any, next: NextFunction): Promise<void>{
+	async updateMe(req: any, res: any, next: NextFunction): Promise<any>{
 		const newObjUser: {} = req.body;
 
 		const updatedUser = await User.updateOne(req.user, newObjUser, {
@@ -71,23 +67,12 @@ class UserRepository implements IuserRepository {
 			runValidators: true
 		});
 
-		res.status(200).json({
-			message: "success",
-			data:{ 
-				updatedUser: updatedUser
-			}
-		});
-
-		return;
+		return updatedUser;
 	}
 
 	async deleteMe(req: any, res: any, next: NextFunction): Promise<void> {
 		await User.findByIdAndDelete(req.user._id);
-		res.status(204).json({
-			message: "success"
-		});
-
-		return;
+	
 	}
 };
 
