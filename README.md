@@ -170,6 +170,7 @@ e.g.:
 ![image](https://user-images.githubusercontent.com/114432972/224572449-5cdc9c06-e216-4bfc-bd31-645cc72f8b4e.png)
 
 ##Document
+<http://localhost:8000/apiDocs/>
 
 ## Features
 * Get all events
