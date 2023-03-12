@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { EventRepository } from "../repositories/EventRepository";
 import { IEvent as IRequest } from "../models/IEvent";
+import { User } from "../models/User";
 
 const eventRepository = EventRepository.getInstance();
 
 class EventController {
   async createEvent(req: Request, res: Response): Promise<Response> {
     const { description, dayOfWeek }: IRequest = req.body;
+
     const eventCreated = await eventRepository.create({ description, dayOfWeek });
 
     return res.status(201).json({ event: eventCreated });

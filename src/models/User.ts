@@ -35,27 +35,15 @@ const userSchema = new Schema<IUser>({
 		type: String,
 		select: false
 	}
-	//active
-	//resettoken
-	//resettokenexpires
-	//resetpassowrdat
 });
 
-//encrypt password before saving
 userSchema.pre("save", async function (next):Promise<void> {
-
-	if (this.isModified('password')){
+	if (this.isModified("password")){
 		this.password = await bcrypt.hash(this.password, 12);
 		next();
 	}
 	return next();
 })
-
-//add some methods to the model such as for reseting password if needed
-
-// userSchema.methods.checkPassword = async function(password : string | Buffer, encryptedPassword : string) {
-// 	return await bcrypt.compare(password, encryptedPassword);
-// }
 
 const User = model<IUser>("User", userSchema);
 
