@@ -74,7 +74,11 @@ e.g.:
 
 ![image](https://user-images.githubusercontent.com/114432972/224572652-effaec36-0d0a-4835-afbb-1c64cba49113.png)
 --------------------------------------------------------------
+**Another important setup for your postman is(This should be applied only in Sign in and Sign Up routes):**
 
+![image](https://user-images.githubusercontent.com/114432972/224577983-cb42b184-c069-4376-8094-92918da81357.png)
+
+--------------------------------------------------------------
 **Notice that If you try to login beeing already logged, there should appear a message that says: User is already logged in!! Logging off current user. If it does not apper, maybe you haven't set a enviroment variable "jwt", as in the following image:**
 
 ![image](https://user-images.githubusercontent.com/114432972/224577769-ac250fb2-591d-45d2-bfaf-8fbba6855073.png)
