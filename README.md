@@ -186,9 +186,8 @@ e.g.:
 Swagger documentation:
 <http://localhost:8000/apiDocs/>
 
-Postman:
-<https://elements.getpostman.com/redirect?entityId=26268056-2b3f439f-f128-478f-80e8-48f925489c83&entityType=collection>
-
+Postman documentation for extra help in understanding:
+<https://documenter.getpostman.com/view/26268056/2s93JtRPTn>
 --------------------------------------------------------------
 ## Features
 * Get all events
