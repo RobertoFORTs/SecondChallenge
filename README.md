@@ -59,72 +59,100 @@ For devDependencies:
 
 ```npm i "packageName@version" -D```
 
+**To start the project locally, use:**
+
+```npm start``` in the terminal
+
 Besides that, you can also install and use Postman or any other client simulator to send requests
 
 ### Routes 
+**For every Route, there will be a variable {{URL}} which stands for "localhost:port/api/v1"**
 
-#### Event Routes
-
-```/api/v1/events/allEvents```
- * For geting All Events(get request)
- 
- * For creating an Event(post request)
- 
-```/api/v1/events/dayOfWeek?dayOfWeek=xyz```
- * For  getting Events On Week Day(get request)
- * For deleting Events From Week Day(delete request)
-  
-```/api/v1/events/:id```
- *  For getting an Event By Id(get request) 
- *  For deleting an Event By Id(delete request)
- 
-#### User Routes
-**For every user route you will have to set an Authorization header of type Bearer Token**
+**For every route you will have to set an Authorization header of type Bearer Token. That means you have to either Log In or Create an User(automatically logs in) to have access to any route**
 
 e.g.:
 
 ![image](https://user-images.githubusercontent.com/114432972/224572652-effaec36-0d0a-4835-afbb-1c64cba49113.png)
 
+--------------------------------------------------------------
 
-```/api/v1/users/signUp```
+#### Event Routes
+--------------------------------------------------------------
+
+```{{URL}}/events/allEvents```
+ * For geting All Events(get request)
+ 
+ e.g.:
+ 
+ ![image](https://user-images.githubusercontent.com/114432972/224573598-5da7b160-e67a-4017-ad9a-c678ad1df475.png)
+
+--------------------------------------------------------------
+
+```{{URL}}/events```
+ * For creating an Event(post request)
+ 
+ e.g.:
+ 
+ ![image](https://user-images.githubusercontent.com/114432972/224573733-d8626462-1fa8-4e3b-a316-64621ffce927.png)
+
+--------------------------------------------------------------
+ 
+```{{URL}}/events/dayOfWeek?dayOfWeek=xyz```
+ * For  getting Events On Week Day(get request)
+ 
+ e.g.:
+ 
+ ![image](https://user-images.githubusercontent.com/114432972/224573828-81d4e06e-89aa-4c39-81df-2d8820ca2112.png)
+
+--------------------------------------------------------------
+
+ * For deleting Events From Week Day(delete request)
+ 
+ e.g.:
+ 
+ 
+  
+```{{URL}}/events/:id```
+ *  For getting an Event By Id(get request) 
+ *  For deleting an Event By Id(delete request)
+ --------------------------------------------------------------
+ 
+#### User Routes
+ --------------------------------------------------------------
+```{{URL}}/users/signUp```
  * For signing User Up(post request)
  
  request e.g.:
  
  ![image](https://user-images.githubusercontent.com/114432972/224571942-404e13b4-ebd7-4de4-b7d6-dbfa6fc5ad21.png)
 
+
  response e.g.:
  
  ![image](https://user-images.githubusercontent.com/114432972/224572064-f6a37019-a59d-4b21-85d5-fa3a9beba93b.png)
 
-  
-```/api/v1/users/signIn```
+ --------------------------------------------------------------  
+```{{URL}}/users/signIn```
  * For signing User In(post request)
  
  e.g.:
  
  ![image](https://user-images.githubusercontent.com/114432972/224572278-da8af10e-8c78-443e-91ee-0ff3e29abe33.png)
 
-
-```/api/v1/users```
+ --------------------------------------------------------------
+```{{URL}}/users```
 * For updating user data(post request)
 
 e.g.:
 
 ![image](https://user-images.githubusercontent.com/114432972/224572359-886822ac-1c01-4905-8f64-229758b24126.png)
 
-
+ --------------------------------------------------------------
 * For deleting an user(delete request)
 
 e.g.:
 
 ![image](https://user-images.githubusercontent.com/114432972/224572449-5cdc9c06-e216-4bfc-bd31-645cc72f8b4e.png)
-
- 
-
-To start the project locally, use:
-
-```npm start``` in the terminal
 
 ##Document
 
