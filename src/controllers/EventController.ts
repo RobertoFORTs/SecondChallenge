@@ -39,7 +39,7 @@ class EventController {
 
     await eventRepository.deleteEventById(id);
 
-    return res.status(200).json({ message: "Event deleted" });
+    return res.status(204).json({ message: "Event deleted" });
   }
 
   async deleteEventByDayOfWeek(req: Request, res: Response): Promise<Response> {
@@ -47,7 +47,7 @@ class EventController {
 
     await eventRepository.deleteEventsByDayOfWeek(dayOfWeek);
 
-    return res.status(200).json({ message: "Event deleted" });
+    return res.status(204).json({ message: "Event deleted" });
   }
 }
 
