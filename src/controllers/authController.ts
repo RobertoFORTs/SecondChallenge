@@ -64,7 +64,7 @@ export async function baseProtection (req: any, res: any, next: NextFunction): P
   let current = await User.findById(validateToken.id);
 
   if (!current){
-    next( new AppError("User does not exist", 401));
+    next( new AppError("User does not exist", 404));
   }
 
   req.user = current;
