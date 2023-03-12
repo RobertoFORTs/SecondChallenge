@@ -189,6 +189,7 @@ Swagger documentation:
 
 Postman documentation:
 <https://documenter.getpostman.com/view/26268056/2s93JtRPTn>
+
 --------------------------------------------------------------
 ## Features
 * Get all events
