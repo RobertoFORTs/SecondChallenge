@@ -45,9 +45,11 @@ Please see the appropriate guide for the enviroment of choice.
 To run this project, install locally usign npm:
 
 If you only downloaded the repository, use in the same repository directory:
+
 ```npm install```
 
 For Dependencies:
+
 ```npm i "packageName@version"```
 
 For devDependencies:
