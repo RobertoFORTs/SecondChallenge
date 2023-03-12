@@ -2,10 +2,11 @@
 
 ## Table of Contents
 * [General Info](https://github.com/RobertoFORTs/SecondChallenge/tree/development#general-info)
-* Technologies
-* Deploy
-* Setup
-* Features
+* [Technologies](https://github.com/RobertoFORTs/SecondChallenge/tree/development#technologies)
+* [Deploy](https://github.com/RobertoFORTs/SecondChallenge/tree/development#deploy)
+* [Setup](https://github.com/RobertoFORTs/SecondChallenge/tree/development#setup)
+* [Features](https://github.com/RobertoFORTs/SecondChallenge/tree/development#features)
+* [Document]
 
 
 ## General Info
@@ -58,12 +59,13 @@ For devDependencies:
 
 ```npm i "packageName@version" -D```
 
-Besides that, you can also install and use Postman to send requests:
+Besides that, you can also install and use Postman or any other client simulator to send requests
 
-The routes used are:
+### Routes 
 
 ```/api/v1/events/allEvents```
  * For geting All Events(get request)
+ 
  * For creating an Event(post request)
  
 ```/api/v1/events/dayOfWeek?dayOfWeek=xyz```
@@ -76,6 +78,15 @@ The routes used are:
 
 ```/api/v1/users/signUp```
  * For signing User Up(post request)
+ 
+ request e.g.:
+ 
+ ![image](https://user-images.githubusercontent.com/114432972/224571942-404e13b4-ebd7-4de4-b7d6-dbfa6fc5ad21.png)
+
+ response e.g.:
+ 
+ ![image](https://user-images.githubusercontent.com/114432972/224572064-f6a37019-a59d-4b21-85d5-fa3a9beba93b.png)
+
   
 ```/api/v1/users/signIn```
  * For signing User In(post request)
@@ -88,6 +99,8 @@ The routes used are:
 To start the project locally, use:
 
 ```npm start``` in the terminal
+
+##Document
 
 ## Features
 * Get all events
