@@ -6,11 +6,11 @@
 * [Deploy](https://github.com/RobertoFORTs/SecondChallenge/tree/development#deploy)
 * [Setup](https://github.com/RobertoFORTs/SecondChallenge/tree/development#setup)
 * [Features](https://github.com/RobertoFORTs/SecondChallenge/tree/development#features)
-* [Document]
+* [Document](https://github.com/RobertoFORTs/SecondChallenge/blob/development/README.md#document)
 
 
 ## General Info
-A planner to organize the week of someone. This is a training project to learn node.js and express
+A planner to organize the week of someone. This is a training project to learn building a node.js mongoose API.
 
 ## Technologies
 Project is created with:
@@ -155,19 +155,22 @@ e.g.:
  ![image](https://user-images.githubusercontent.com/114432972/224572278-da8af10e-8c78-443e-91ee-0ff3e29abe33.png)
 
  --------------------------------------------------------------
-```{{URL}}/users```
+```{{URL}}/users/update```
 * For updating user data(post request)
 
 e.g.:
 
-![image](https://user-images.githubusercontent.com/114432972/224572359-886822ac-1c01-4905-8f64-229758b24126.png)
+![image](https://user-images.githubusercontent.com/114432972/224575347-10ce1b46-9aec-4fe8-8485-ba8e64260ac3.png)
+
 
  --------------------------------------------------------------
+ ```{{URL}}/users/delete```
 * For deleting an user(delete request)
 
 e.g.:
 
-![image](https://user-images.githubusercontent.com/114432972/224572449-5cdc9c06-e216-4bfc-bd31-645cc72f8b4e.png)
+![image](https://user-images.githubusercontent.com/114432972/224575396-c9613a3b-2b1c-4995-ae13-22f542ccfbc3.png)
+
 
 --------------------------------------------------------------
 ## Document
