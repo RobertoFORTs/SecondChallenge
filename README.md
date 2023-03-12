@@ -10,7 +10,7 @@
 
 
 ## General Info
-A planner to organize the week of someone. This is a training project to learn node.js and express
+A planner to organize the week of someone. This is a training project to learn building a node.js mongoose API.
 
 ## Technologies
 Project is created with:
