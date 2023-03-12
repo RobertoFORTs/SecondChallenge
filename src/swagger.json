@@ -279,7 +279,67 @@
           }
         }
       }
-    } 
+    },
+    "/users/update": {
+      "put": {
+        "summary": "Update an user",
+        "description": "This route is responsible for updating an user",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref":"#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                 "value": {
+                    "firstName": "Dener",
+                    "lastName":"Oliveira",
+                    "birthDate": "2023-01-01",
+                    "city": "Golden City",
+                    "country": "Brazil"
+                 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Incorrect email or password"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/delete": {
+      "delete": {
+        "summary": "Delete an user",
+        "description": "This route is responsible for deleting an user",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "204": {
+            "description": "OK"
+          }
+        }
+      }
+    }
   },
   "components": {
     "schemas": {
