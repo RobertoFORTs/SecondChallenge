@@ -10,14 +10,14 @@ import { userRouter } from "./routes/userRoutes";
 import { eventRouter } from "./routes/eventRutes";
 
 import swaggerUI from "swagger-ui-express";
-import swaggerJsDoc from "swagger-jsdoc";
-import swaggerOptions from "./swaggerOptions";
+import swaggerDocs from "./swagger.json";
 
 dotenv.config({ path: "./config.env" });
 
 const app = express();
 
 app.use(express.json());
+app.use("/apiDocs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 app.use("/api/v1", userRouter);
 app.use("/api/v1/events", eventRouter);
 

@@ -1,0 +1,341 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Planner",
+    "description": "This is a planner API",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1"
+    }
+  ],
+  "paths": {
+    "/events": {
+      "post": {
+        "summary": "Create a new event",
+        "description": "This route is responsible for creating a new event",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event"
+              },
+              "examples": {
+                "event": {
+                  "value": {
+                    "description": "Arctic Monkeys Show",
+                    "dayOfWeek": "Monday"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/allEvents": {
+      "get": {
+        "summary": "Get all events",
+        "description": "This route is responsible for getting all events",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref":"#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "summary": "Get all events by ID",
+        "description": "This route is responsible for getting all events ID",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID for the search",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref":"#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/dayOfWeek": {
+      "get": {
+        "summary": "Get all events by day of week",
+        "description": "This route is responsible for getting all events by day of week",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "dayOfWeek",
+            "in": "query",
+            "description": "Day of week for the search",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref":"#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      } 
+    },
+    "/events/event/{id}": {
+      "delete": {
+        "summary": "Delete an event by ID",
+        "description": "This route is responsible for deleting an event by ID",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID for the deleting",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "200": {
+            "description": "Event deleted"
+          }
+        }
+      }
+    },
+    "/events/deleteEvent": {
+      "delete": {
+        "summary": "Delete events by day of week",
+        "description": "This route is responsible for deleting an event by day of week",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "dayOfWeek",
+            "in": "path",
+            "description": "Day of week for the deleting",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Please log in to gain access"
+          },
+          "200": {
+            "description": "Event deleted"
+          }
+        }
+      }
+    },
+    "/users/signUp": {
+      "post": {
+        "summary": "Create a new user",
+        "description": "This route is responsible for creating a new user",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref":"#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                 "value": {
+                    "firstName": "Dener",
+                    "lastName":"Oliveira",
+                    "birthDate": "2023-01-01",
+                    "city": "Golden City",
+                    "country": "Brazil",
+                    "email": "denerOliveira@gmail.com",
+                    "password": "batatinha123456",
+                    "confirmPassword": "batatinha123456"
+                 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }, 
+    "/users/signIn": {
+      "post": {
+        "summary": "Sign in an user",
+        "description": "This route is responsible for signing in an user",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref":"#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                 "value": {
+                    "email": "denerOliveira@gmail.com",
+                    "password": "batatinha123456"
+                 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Incorrect email or password"
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    } 
+  },
+  "components": {
+    "schemas": {
+      "Event": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "dayOfWeek": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

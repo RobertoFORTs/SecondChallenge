@@ -10,11 +10,11 @@ const eventController = new EventController();
 
 eventRouter.post("/", createEventValidator, eventController.createEvent);
 
-eventRouter.get("/", eventController.getAllEvents);
+eventRouter.get("/allEvents", eventController.getAllEvents);
 eventRouter.get("/dayOfWeek", dayOfWeekValidator, eventController.getEventByDayOfWeek);
 eventRouter.get("/:id", idValidator, eventController.getEventById);
 
 eventRouter.delete("/event/:id", idValidator, eventController.deleteEventById);
-eventRouter.delete("/", dayOfWeekValidator, eventController.deleteEventByDayOfWeek);
+eventRouter.delete("/deleteEvent", dayOfWeekValidator, eventController.deleteEventByDayOfWeek);
 
 export { eventRouter }
