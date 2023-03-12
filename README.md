@@ -63,6 +63,8 @@ Besides that, you can also install and use Postman or any other client simulator
 
 ### Routes 
 
+#### Event Routes
+
 ```/api/v1/events/allEvents```
  * For geting All Events(get request)
  
@@ -75,6 +77,14 @@ Besides that, you can also install and use Postman or any other client simulator
 ```/api/v1/events/:id```
  *  For getting an Event By Id(get request) 
  *  For deleting an Event By Id(delete request)
+ 
+#### User Routes
+**For every user route you will have to set an Authorization header of type Bearer Token**
+
+e.g.:
+
+![image](https://user-images.githubusercontent.com/114432972/224572652-effaec36-0d0a-4835-afbb-1c64cba49113.png)
+
 
 ```/api/v1/users/signUp```
  * For signing User Up(post request)
@@ -90,10 +100,26 @@ Besides that, you can also install and use Postman or any other client simulator
   
 ```/api/v1/users/signIn```
  * For signing User In(post request)
+ 
+ e.g.:
+ 
+ ![image](https://user-images.githubusercontent.com/114432972/224572278-da8af10e-8c78-443e-91ee-0ff3e29abe33.png)
+
 
 ```/api/v1/users```
 * For updating user data(post request)
+
+e.g.:
+
+![image](https://user-images.githubusercontent.com/114432972/224572359-886822ac-1c01-4905-8f64-229758b24126.png)
+
+
 * For deleting an user(delete request)
+
+e.g.:
+
+![image](https://user-images.githubusercontent.com/114432972/224572449-5cdc9c06-e216-4bfc-bd31-645cc72f8b4e.png)
+
  
 
 To start the project locally, use:
