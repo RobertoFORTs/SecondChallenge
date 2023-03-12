@@ -2,8 +2,9 @@ import { HydratedDocument } from "mongoose";
 import { createJwtToken } from "../controllers/authController";
 import { AppError } from "../errors/AppError";
 import { User } from "../models/User";
-import bcrypt from "bcrypt";
 import { NextFunction } from "express";
+
+import bcrypt from "bcrypt";
 
 interface Iuser{
 	firstName: string, 
@@ -16,14 +17,23 @@ interface Iuser{
 	confirmPassword: string 
 };
 
-interface IuserRepository{
+interface IuserRepository { 
 	signUserUp(user: Iuser, status: number, res: any): Promise<void>,
 	signUserIn(email: string, password: string, res: any, next: any): Promise<void>,
 	updateMe(req: any, res: any, next: NextFunction): Promise<void>,
 	deleteMe(req: any, res: any, next: NextFunction): Promise<void>,
 };
 
-export class UserRepository implements IuserRepository{
+class UserRepository implements IuserRepository {
+	private static INSTANCE: UserRepository;
+
+	static getInstance() {
+		if (!UserRepository.INSTANCE) {
+			UserRepository.INSTANCE = new UserRepository();
+		}
+
+		return UserRepository.INSTANCE;
+	}
 
 	async signUserUp(user: Iuser, status: number, res: any): Promise<void> {
 		const newUser = await User.create({
@@ -35,20 +45,22 @@ export class UserRepository implements IuserRepository{
 			email: user.email,
 			password: user.password
 		});
-		createJwtToken(newUser, 201, "Succesfull user registration", res); //it also will send the data
+
+		createJwtToken(newUser, status, "Successfull user registration", res);
+
+		return;
 	};
 
-
 	async signUserIn(email: string, password: string, res: any, next: any): Promise<void>{	
-		//find existing user
 		const user: HydratedDocument<Iuser> | null = await User.findOne({ email }).select("+password");
 		
-		//user found? is password correct?
 		if (!user || !(await bcrypt.compare(password, user.password))){
 			return next(new AppError("incorrect email or password", 401));
 		}
 
 		createJwtToken(user, 200, "User has logged in", res);
+
+		return;
 	}
 
 	async updateMe(req: any, res: any, next: NextFunction): Promise<void>{
@@ -65,6 +77,8 @@ export class UserRepository implements IuserRepository{
 				updatedUser: updatedUser
 			}
 		});
+
+		return;
 	}
 
 	async deleteMe(req: any, res: any, next: NextFunction): Promise<void> {
@@ -72,5 +86,9 @@ export class UserRepository implements IuserRepository{
 		res.status(204).json({
 			message: "success"
 		});
+
+		return;
 	}
 };
+
+export { UserRepository }

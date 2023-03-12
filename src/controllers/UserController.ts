@@ -1,28 +1,37 @@
-import {NextFunction, Request, Response} from "express";
+import { NextFunction, Request } from "express";
 import { AppError } from "../errors/AppError";
-import { UserRepository } from "../repositories/UserRepository"; //contains the actual methods
-//this is still only a base controller, it has to be added more complex funccionality
-const repository = new UserRepository();
+import { UserRepository } from "../repositories/UserRepository";
 
-export class UserController {
-    async signUserUp (req : Request, res: any): Promise<void> { //res in type any coz type Response doenst have res.cookie
+const repository = UserRepository.getInstance();
+
+class UserController {
+  async signUserUp (req: Request, res: any): Promise<void> {       
+  	await repository.signUserUp(req.body, 201, res);
+
+		return;
+  }
+
+  async signUserIn(req: any, res: any, next: any): Promise<void> {
+   if (!req.body.email || !req.body.password){
+  	return next(new AppError("Please provide email and password", 400));
+   }
         
-        await repository.signUserUp(req.body, 201, res);  //data is beeing sent in authController(createJwtToken)
-    };
+   await repository.signUserIn(req.body.email, req.body.password, res, next);
 
-    async signUserIn(req : any, res: any, next: any): Promise<void> {
-        if (!req.body.email || !req.body.password){
-            return next(new AppError("Please provide email and password", 400));
-        }
-        
-        await repository.signUserIn(req.body.email, req.body.password, res, next);
-    }
+	 return;
+  }
 
-    async uptadeMe (req: any, res: any, next: NextFunction): Promise<void>{
-        await repository.updateMe(req, res, next);
-    }
+  async uptadeMe (req: any, res: any, next: NextFunction): Promise<void>{
+  	await repository.updateMe(req, res, next);
 
-    async deleteMe (req: any, res: any, next: NextFunction): Promise<void>{
-        await repository.deleteMe(req, res, next);
-    }
+		return;
+  }
+
+  async deleteMe (req: any, res: any, next: NextFunction): Promise<void>{
+  	await repository.deleteMe(req, res, next);
+
+		return;
+  }
 }
+
+export { UserController }
