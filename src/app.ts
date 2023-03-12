@@ -23,7 +23,9 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/events", eventRouter);
 
 const DB = process.env.DATABASE!.replace("<PASSWORD>", process.env.DATABASE_PASSWORD!);
-connect(DB).then(() => console.log("DB connection successful!"));
+connect(DB).then(() => console.log("DB connection successful!")).catch((err)=> {
+  console.log("Could not connect to database");
+});
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof AppError) {
@@ -31,7 +33,14 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   }
 
   if (error instanceof ValidationError) {
+    let newErrorMessage = error.message.split("\"");
+    error.message = `${newErrorMessage[1]}${newErrorMessage[2]}`;
+
     return res.status(400).json({ message: error.message });
+  }
+
+  if (error.name === "MongoServerError") {
+    return res.status(400).json({ message: "Email is already being used" });
   }
 
   return res.status(500).json({ message: error.message });

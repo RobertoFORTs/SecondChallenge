@@ -182,7 +182,7 @@
         "parameters": [
           {
             "name": "dayOfWeek",
-            "in": "path",
+            "in": "query",
             "description": "Day of week for the deleting",
             "required": true
           }
