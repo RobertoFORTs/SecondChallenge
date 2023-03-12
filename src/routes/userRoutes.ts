@@ -14,9 +14,7 @@ userRouter.post("/signIn", isLoggedIn, userController.signUserIn);
 
 userRouter.use(baseProtection);
 
-userRouter
-  .route("/users")
-  .put(updateMeValidator, userController.uptadeMe)
-  .delete(userController.deleteMe);
+userRouter.put("/update", updateMeValidator, userController.uptadeMe);
+userRouter.delete("/delete", userController.deleteMe);
 
 export { userRouter };
