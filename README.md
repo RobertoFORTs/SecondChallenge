@@ -183,10 +183,11 @@ e.g.:
 
 --------------------------------------------------------------
 ## Document
+
 Swagger documentation:
 <http://localhost:8000/apiDocs/>
 
-Postman documentation for extra help in understanding:
+Postman documentation:
 <https://documenter.getpostman.com/view/26268056/2s93JtRPTn>
 --------------------------------------------------------------
 ## Features
