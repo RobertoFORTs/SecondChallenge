@@ -19,7 +19,15 @@ class EventController {
 
     let eventCreated = await eventRepository.create({ description, dayOfWeek, user });
 
-    return res.status(201).json({ event: eventCreated });
+    return res.status(201).json({
+      message: 'success',
+      data: {
+        description: eventCreated.description,
+        dayOfWeek: eventCreated.dayOfWeek,
+        _id: eventCreated._id
+      }
+
+    });
   }
 
   async getAllEvents(req: IRequest, res: Response): Promise<Response> {
