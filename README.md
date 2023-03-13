@@ -10,7 +10,9 @@
 
 
 ## General Info
-A planner to organize the week of someone. This is a training project to learn building a node.js mongoose API.
+This is a training project to learn building a node.js mongoose API.
+
+In this project. An user is able to create itself and then start building a planner to organize his week. The user only gain acces to any funcionality of the project if he is logged in and can only access his personal planner. To login, he can either create itself(automatically), which means he is using the project the first time, or use the login route.
 
 ## Technologies
 Project is created with:
@@ -192,9 +194,9 @@ Postman documentation:
 
 --------------------------------------------------------------
 ## Features
-* Get all events
-* Get events of week day
-* Get events by id
+* Get all events of the user
+* Get events of week day of the user
+* Get events by id (will get only one of the users event that correspond to the id passed in the param)
 * Create an event
 * Delete event by its id
 * Delete all events of a week day
