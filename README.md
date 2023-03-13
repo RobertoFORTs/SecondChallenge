@@ -40,7 +40,7 @@ Project is created with:
 * "typescript": "^4.9.5"
 
 ## Deploy
-https://railway.app/project/7e1a3c4f-4fca-4606-83c6-08ae2988bcb3/service/3a93b41b-5b31-48c5-b8f3-08265aecc063
+<secondchallenge-production.up.railway.app>
 
 ## Setup
 Please see the appropriate guide for the enviroment of choice.
