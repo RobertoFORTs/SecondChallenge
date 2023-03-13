@@ -33,7 +33,6 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   }
 
   if (error instanceof ValidationError) {
-    console.log(error);
    if (error.message.includes("\"")) {
     let newErrorMessage = error.message.split("\"");
     error.message = `${newErrorMessage[1]}${newErrorMessage[2]}`;
