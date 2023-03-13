@@ -1,54 +1,50 @@
-import {Schema, model} from "mongoose";
+import { Schema, model } from "mongoose";
+import bcrypt from "bcrypt";
 
-interface Iuser{
-    firstName: string, 
-    lastName: string, 
-    birthDate: Date, 
-    city: string, 
-    country: string, 
-    email: string, 
-    password: string, 
-    confirmPassword: string 
-}
+interface IUser {
+	firstName: string,
+	lastName: string,
+	birthDate: Date,
+	city: string,
+	country: string,
+	email: string,
+	password: string,
+	confirmPassword: string
+};
 
-const userSchema = new Schema<Iuser>({
-    firstName: {
-        type: String,
-        required: [true, "A user needs a first name."]
-    }, 
-    lastName: {
-        type: String,
-        required: [true, "A user needs a last name."]
-    },
-    birthDate: {
-        type: Date,
-        required: [true, "A user needs a birth Date."]
-    }, 
-    city: {
-        type: String,
-        required: [true, "Invalid city name."]
-    },
+const userSchema = new Schema<IUser>({
+	firstName: {
+		type: String,
+	},
+	lastName: {
+		type: String,
+	},
+	birthDate: {
+		type: Date,
+	},
+	city: {
+		type: String,
+	},
+	country: {
+		type: String,
+	},
+	email: {
+		type: String,
+	},
+	password: {
+		type: String,
+		select: false
+	}
+});
 
-    country: {
-        type: String,
-        required: [true, "Invalid country name."]
-    }, 
-    email: {
-        type: String,
-        required: [true, "Field email is required."]
-    }, 
-    password: {
-        type: String,
-        required: [true, "A user has to have a password."]
-    },
-    confirmPassword: {
-        type: String,
-        required: [true, "Invalid confirmPassword entry"]
-    }
+userSchema.pre("save", async function (next):Promise<void> {
+	if (this.isModified("password")){
+		this.password = await bcrypt.hash(this.password, 12);
+		next();
+	}
+	return next();
 })
 
-const User = model<Iuser>("User", userSchema);
+const User = model<IUser>("User", userSchema);
 
-export {User};
-
-
+export { User };

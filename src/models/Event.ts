@@ -1,22 +1,22 @@
-import { Schema, model } from "mongoose";
-
-interface IEvent {
-  description: string;
-  dateTime: Date;
-  createdAt: Date;
-}
+import mongoose, { Schema, model } from "mongoose";
+import { IEvent } from "./IEvent";
 
 const eventSchema = new Schema<IEvent>({
-  description: { 
+  description: {
     type: String,
   },
-  dateTime: { 
-    type: Date,
+  dayOfWeek: {
+    type: String,
   },
-  createdAt: { 
-    type: Date, 
+  createdAt: {
+    type: Date,
     default: Date.now(),
   },
+  user : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  }
 });
 
 const Event = model<IEvent>("Event", eventSchema);
