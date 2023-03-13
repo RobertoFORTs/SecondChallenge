@@ -43,7 +43,7 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({ message: "Email is already being used" });
   }
 
-  return res.status(500).json({ message: "Internal server error" });
+  return res.status(500).json({ message: error.message });
 });
 
 export { app };
