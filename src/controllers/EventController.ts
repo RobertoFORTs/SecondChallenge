@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
 import { EventRepository } from "../repositories/EventRepository";
-import { User } from "../models/User";
+import { ObjectId } from "mongoose";
 
 const eventRepository = EventRepository.getInstance();
 interface IRequest extends Request {
   description: string;
   dayOfWeek: string;
-  createdAt: Date;
+  user: {
+    _id: string;
+  }
 };
 
 class EventController {
-  async createEvent(req: any, res: Response): Promise<Response> {
+  async createEvent(req: IRequest, res: Response): Promise<Response> {
     const { description, dayOfWeek }: IRequest = req.body;
     const user = req.user._id;
 
@@ -19,42 +21,47 @@ class EventController {
     return res.status(201).json({ event: eventCreated });
   }
 
-  async getAllEvents(req: Request, res: Response): Promise<Response> {
-    const events = await eventRepository.getAllEvents();
+  async getAllEvents(req: IRequest, res: Response): Promise<Response> {
+    const user = req.user._id;
+    const events = await eventRepository.getAllEvents(user);
 
     return res.status(200).json({ events: events });
   }
 
-  async getEventById(req: Request, res: Response): Promise<Response> {
+  async getEventById(req: IRequest, res: Response): Promise<Response> {
     const { id } = req.params;
+    const user = req.user._id;
 
-    const eventFound = await eventRepository.getEventById(id);
+    const eventFound = await eventRepository.getEventById(id, user);
 
     return res.status(200).json({ event: eventFound });
   }
 
-  async getEventByDayOfWeek(req: Request, res: Response): Promise<Response> {
+  async getEventByDayOfWeek(req: IRequest, res: Response): Promise<Response> {
     let dayOfWeek = String(req.query.dayOfWeek);  
+    const user = req.user._id;
   
-    const eventsFound = await eventRepository.getEventsByDayOfWeek(dayOfWeek);
+    const eventsFound = await eventRepository.getEventsByDayOfWeek(dayOfWeek, user);
 
     return res.status(200).json({ events: eventsFound });
   }
 
-  async deleteEventById(req: Request, res: Response): Promise<Response> {
+  async deleteEventById(req: IRequest, res: Response): Promise<Response> {
     const { id } = req.params;
+    const user = req.user._id;
 
-    await eventRepository.deleteEventById(id);
+    await eventRepository.deleteEventById(id, user);
 
-    return res.status(204).json({ message: "Event deleted" });
+    return res.status(204).send();
   }
 
-  async deleteEventByDayOfWeek(req: Request, res: Response): Promise<Response> {
+  async deleteEventByDayOfWeek(req: IRequest, res: Response): Promise<Response> {
     let dayOfWeek = String(req.query.dayOfWeek);  
+    const user = req.user._id;
 
-    await eventRepository.deleteEventsByDayOfWeek(dayOfWeek);
+    await eventRepository.deleteEventsByDayOfWeek(dayOfWeek, user);
 
-    return res.status(204).json({ message: "Event deleted" });
+    return res.status(204).send();
   }
 }
 

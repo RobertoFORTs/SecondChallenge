@@ -1,19 +1,19 @@
-import {  HydratedDocument } from "mongoose";
+import {  HydratedDocument, ObjectId } from "mongoose";
 import { Event } from "../models/Event";
 
 interface IEvent {
   description: string;
   dayOfWeek: string;
-  user: any
+  user: ObjectId | string;
 }
 
 interface IEventRepository {
   create(event: IEvent): Promise<HydratedDocument<IEvent>>;
-  getEventById(id: string): Promise<HydratedDocument<IEvent> | null>;
-  getEventsByDayOfWeek(dayOfWeek: string): Promise<HydratedDocument<IEvent>[]>;  
-  getAllEvents(): Promise<HydratedDocument<IEvent>[]>;  
-  deleteEventById(id: string): Promise<void>;
-  deleteEventsByDayOfWeek(dayOfWeek: string): Promise<void>;
+  getEventById(id: string, userId: string): Promise<HydratedDocument<IEvent> | null>;
+  getEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<HydratedDocument<IEvent>[]>;  
+  getAllEvents(userId: string): Promise<HydratedDocument<IEvent>[]>;  
+  deleteEventById(id: string, userId: string): Promise<void>;
+  deleteEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<void>;
 }
 
 class EventRepository implements IEventRepository {
@@ -33,42 +33,32 @@ class EventRepository implements IEventRepository {
     return event;
   }
 
-  async getEventById(id: string): Promise<HydratedDocument<IEvent> | null> {
-    const event = await Event.findById(id);
+  async getEventById(id: string, userId: string): Promise<HydratedDocument<IEvent> | null> {
+    const event = await Event.findOne({ _id: id, user: userId });
 
     return event;
   }
 
-  async getEventsByDayOfWeek(dayOfWeek: string): Promise<HydratedDocument<IEvent>[]> {
-    const events = await Event.find();
-    const eventsByDayOfWeek = events.filter((event: HydratedDocument<IEvent>) => {
-      if (dayOfWeek === event.dayOfWeek) {
-        return event;
-      }
-    });
+  async getEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<HydratedDocument<IEvent>[]> {
+    const eventsByDayOfWeek = await Event.find({ dayOfWeek, user: userId });
 
     return eventsByDayOfWeek;
   }
 
-  async getAllEvents(): Promise<HydratedDocument<IEvent>[]> {
-    const events = await Event.find();
+  async getAllEvents(userId: string): Promise<HydratedDocument<IEvent>[]> {
+    const events = await Event.find({ user: userId});
 
     return events;
   }
 
-  async deleteEventById(id: string): Promise<void> {
-    await Event.deleteOne({ _id: id });
+  async deleteEventById(id: string, userId: string): Promise<void> {
+    await Event.deleteOne({ _id: id, user: userId });
     
     return;
   }
 
-  async deleteEventsByDayOfWeek(dayOfWeek: string): Promise<void> {
-    const events = await Event.find();
-    events.filter(async (event: HydratedDocument<IEvent>) => {
-      if (dayOfWeek === event.dayOfWeek) {
-        await Event.deleteOne(event._id);
-      }
-    });
+  async deleteEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<void> {
+    await Event.deleteMany({ dayOfWeek: dayOfWeek, user: userId });
 
     return;
   }

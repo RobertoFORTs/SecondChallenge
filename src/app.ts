@@ -33,14 +33,21 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   }
 
   if (error instanceof ValidationError) {
+    console.log(error);
+   if (error.message.includes("\"")) {
     let newErrorMessage = error.message.split("\"");
     error.message = `${newErrorMessage[1]}${newErrorMessage[2]}`;
+
+    if (newErrorMessage[1] === "confirmPassword") {
+      error.message = "password confirmation does not match";
+    }
+   }
 
     return res.status(400).json({ message: error.message });
   }
 
   if (error.name === "MongoServerError") {
-    return res.status(400).json({ message: "Email is already being used" });
+    return res.status(400).json({ message: "email is already being used" });
   }
 
   return res.status(500).json({ message: error.message });

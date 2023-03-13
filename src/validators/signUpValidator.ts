@@ -9,14 +9,14 @@ const requestValidation = Joi.object({
   country: Joi.string().required().messages({ "string.required": "Country is required" }), 
   email: Joi.string().email().required().messages({ "string.required": "Email is required" }), 
   password: Joi.string().min(8).empty().required().messages({
-    "string.min": "Name should be min 8 characters",
-    "string.empty": "Name cannot be an empty field", 
-    "string.required": "Password is required" }), 
+    "string.min": "password should be min 8 characters",
+    "string.empty": "password cannot be an empty field", 
+    "string.required": "password is required" }), 
   confirmPassword: Joi.string().min(8).empty().valid(Joi.ref("password"))
   .required().messages({ 
-    "string.min": "Name should be min 8 characters",
-    "string.empty": "Name cannot be an empty field", 
-    "string.required": "The passwords must be the same" }) 
+    "string.min": "password should be min 8 characters",
+    "string.empty": "password cannot be an empty field", 
+    "string.required": "the passwords must be the same" }) 
 });
 
 async function signUpValidator(req: Request, res: Response, next: NextFunction): Promise<void> {

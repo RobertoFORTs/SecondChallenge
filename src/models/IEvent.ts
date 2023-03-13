@@ -4,7 +4,7 @@ interface IEvent {
   description: string;
   dayOfWeek: string;
   createdAt: Date;
-  user: mongoose.Schema.ObjectId
+  user: mongoose.Schema.Types.ObjectId
 }
 
 export { IEvent };
