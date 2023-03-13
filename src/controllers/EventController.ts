@@ -16,8 +16,8 @@ class EventController {
     const { description, dayOfWeek }: IRequest = req.body;
     const user = req.user._id;
 
-    const eventCreated = await eventRepository.create({ description, dayOfWeek, user });
-
+    let eventCreated = await eventRepository.create({ description, dayOfWeek, user });
+    
     return res.status(201).json({ event: eventCreated });
   }
 
