@@ -3,10 +3,11 @@ import Joi from "joi";
 import { AppError } from "../errors/AppError";
 
 const requestValidation = Joi.string().required();
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
 async function dayOfWeekValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const  dayOfWeek = String(req.query.dayOfWeek);
+  let  dayOfWeek = String(req.query.dayOfWeek);
+  dayOfWeek = dayOfWeek.toLowerCase();
 
   await requestValidation.validateAsync(dayOfWeek);
 

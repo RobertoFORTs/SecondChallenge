@@ -13,11 +13,12 @@ interface IRequest extends Request {
 
 class EventController {
   async createEvent(req: IRequest, res: Response): Promise<Response> {
-    const { description, dayOfWeek }: IRequest = req.body;
+    let { description, dayOfWeek }: IRequest = req.body;
+    dayOfWeek = dayOfWeek.toLowerCase();
     const user = req.user._id;
 
     let eventCreated = await eventRepository.create({ description, dayOfWeek, user });
-    
+
     return res.status(201).json({ event: eventCreated });
   }
 
@@ -39,6 +40,7 @@ class EventController {
 
   async getEventByDayOfWeek(req: IRequest, res: Response): Promise<Response> {
     let dayOfWeek = String(req.query.dayOfWeek);  
+    dayOfWeek = dayOfWeek.toLowerCase();
     const user = req.user._id;
   
     const eventsFound = await eventRepository.getEventsByDayOfWeek(dayOfWeek, user);
@@ -57,6 +59,7 @@ class EventController {
 
   async deleteEventByDayOfWeek(req: IRequest, res: Response): Promise<Response> {
     let dayOfWeek = String(req.query.dayOfWeek);  
+    dayOfWeek = dayOfWeek.toLowerCase();
     const user = req.user._id;
 
     await eventRepository.deleteEventsByDayOfWeek(dayOfWeek, user);
