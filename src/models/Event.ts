@@ -15,7 +15,8 @@ const eventSchema = new Schema<IEvent>({
   user : {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
+    select: false
   }
 });
 
