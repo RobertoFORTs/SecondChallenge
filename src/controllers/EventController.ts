@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { EventRepository } from "../repositories/EventRepository";
 import { ObjectId } from "mongoose";
+import { AppError } from "../errors/AppError";
 
 const eventRepository = EventRepository.getInstance();
 interface IRequest extends Request {
@@ -60,7 +61,11 @@ class EventController {
     const { id } = req.params;
     const user = req.user._id;
 
-    await eventRepository.deleteEventById(id, user);
+    const { deletedCount } = await eventRepository.deleteEventById(id, user);
+
+    if (!deletedCount) {
+      throw new AppError("Cannot find event delete", 404);
+    }
 
     return res.status(204).send();
   }
@@ -70,7 +75,11 @@ class EventController {
     dayOfWeek = dayOfWeek.toLowerCase();
     const user = req.user._id;
 
-    await eventRepository.deleteEventsByDayOfWeek(dayOfWeek, user);
+    const { deletedCount }= await eventRepository.deleteEventsByDayOfWeek(dayOfWeek, user);
+
+    if (!deletedCount) {
+      throw new AppError("Cannot find event delete", 404);
+    }
 
     return res.status(204).send();
   }

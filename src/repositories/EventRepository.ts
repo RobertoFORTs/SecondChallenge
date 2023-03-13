@@ -12,8 +12,8 @@ interface IEventRepository {
   getEventById(id: string, userId: string): Promise<HydratedDocument<IEvent> | null>;
   getEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<HydratedDocument<IEvent>[]>;  
   getAllEvents(userId: string): Promise<HydratedDocument<IEvent>[]>;  
-  deleteEventById(id: string, userId: string): Promise<void>;
-  deleteEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<void>;
+  deleteEventById(id: string, userId: string): Promise<any>;
+  deleteEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<any>;
 }
 
 class EventRepository implements IEventRepository {
@@ -51,16 +51,16 @@ class EventRepository implements IEventRepository {
     return events;
   }
 
-  async deleteEventById(id: string, userId: string): Promise<void> {
-    await Event.deleteOne({ _id: id, user: userId });
+  async deleteEventById(id: string, userId: string): Promise<any> {
+    const eventDeleted = await Event.deleteOne({ _id: id, user: userId });
     
-    return;
+    return eventDeleted;
   }
 
-  async deleteEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<void> {
-    await Event.deleteMany({ dayOfWeek: dayOfWeek, user: userId });
+  async deleteEventsByDayOfWeek(dayOfWeek: string, userId: string): Promise<any> {
+    const eventDeleted = await Event.deleteMany({ dayOfWeek: dayOfWeek, user: userId });
 
-    return;
+    return eventDeleted;
   }
 }
 

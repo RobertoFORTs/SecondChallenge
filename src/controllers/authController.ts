@@ -14,8 +14,9 @@ const signToken = (id: ObjectId) => {
 
 export function createJwtToken (user: any, sCode: number, message: string, res: any): void{ 
   const newToken = signToken(user._id);
-
+  
   user.password = undefined;
+  
   res.setHeader("token", newToken);
   res.status(sCode).json({
     status: "success",
